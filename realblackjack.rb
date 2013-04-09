@@ -11,16 +11,27 @@ class RealBlackJack
   end
 
   def turn
-    puts "Player 1 do you want to draw a card? Total of points is: #{@player1.points}."
+    puts "\nPlayer 1 do you want to draw a card?\n yes / no / score ."
     choice = gets.chomp
     if choice == "yes"
       @player1.add_card(@deck.draw_first_card)
+      puts "\nPlayer 1 draws a card."
+      puts "Player 1's points: #{@player1.points}."
       table_points_are_less_than_17
-      puts "Player 1's points: #{@player1.points}"
       puts "Table's points: #{@table.points}"
       turn
-    elsif choice != "yes"
-      table_points_are_less_than_17
+    elsif choice == "score"
+      puts "\nPlayer 1 has #{@player1.points} points."
+      puts "Player 1's cards:"
+      puts "#{@player1.show_cards}"
+      puts "Table has #{@table.points} points."
+      puts "Table's cards:" 
+      puts "#{@table.show_cards}"
+      turn
+    else
+      while @table.points < 17
+        table_points_are_less_than_17
+      end
       puts "Player 1's points: #{@player1.points}"
       puts "Table's points: #{@table.points}"
       define_winner
@@ -47,6 +58,7 @@ class RealBlackJack
 
   def table_points_are_less_than_17
     if @table.points < 17
+      puts "\nTable draws a card."
       @table.add_card(@deck.draw_first_card)
     end
   end

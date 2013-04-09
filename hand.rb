@@ -15,14 +15,20 @@ class Hand
   end
 
   def validate_presence_of_ace(points)
-    how_many_aces = @cards.select { |x| x.ace? }
-    puts "#{@cards}\n"
-    puts "#{how_many_aces}"
-    while points > 21 && how_many_aces
-      how_many_aces.slice!(0)
-      points -= 10
+    how_many_aces = @cards.select { |x| x.ace? }.count
+    while points > 21
+      if how_many_aces > 0
+        points -= 10
+        how_many_aces -= 1
+      else
+        break
+      end
     end
     return points
+  end
+
+  def show_cards
+    puts "#{@cards}"
   end
 end
 
