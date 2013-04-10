@@ -5,7 +5,7 @@ class RealBlackJack
 
   def initialize
     @player1 = Hand.new
-    @table = Hand.new
+    @dealer = Hand.new
     @deck = Deck.new
     @deck.shuffle
   end
@@ -17,37 +17,47 @@ class RealBlackJack
       @player1.add_card(@deck.draw_first_card)
       puts "\nPlayer 1 draws a card."
       puts "Player 1's points: #{@player1.points}."
-      table_points_are_less_than_17
-      puts "Table's points: #{@table.points}"
       turn
     elsif choice == "score"
-      puts "\nPlayer 1 has #{@player1.points} points."
-      puts "Player 1's cards:"
-      puts "#{@player1.show_cards}"
-      puts "Table has #{@table.points} points."
-      puts "Table's cards:" 
-      puts "#{@table.show_cards}"
+      score
       turn
     else
-      while @table.points < 17
-        table_points_are_less_than_17
-      end
-      puts "Player 1's points: #{@player1.points}"
-      puts "Table's points: #{@table.points}"
+      dealer_plays
       define_winner
     end
   end
 
+  def dealer_plays
+    while @dealer.points < 17
+      dealer_points_are_less_than_17
+    end
+    while (@player1.points - 21) > (@dealer.points - 21) && @dealer.points < 21
+      puts "\nDealer takes the risk and draws a card (#{@dealer.points} points.)"
+      @dealer.add_card(@deck.draw_first_card)
+    end
+  end
+
+  def score
+    puts "\nPlayer 1 has #{@player1.points} points."
+    puts "Player 1's cards:"
+    puts "#{@player1.show_cards}"
+    puts "Dealer has #{@dealer.points} points."
+    puts "Dealer's cards:" 
+    puts "#{@dealer.show_cards}"
+  end
+
   def define_winner
-    if (@player1.points - 21) > 0 && (@table.points - 21) <= 0
-      puts "Table won with #{@table.points} points."
-    elsif (@player1.points - 21) <= 0 && (@table.points - 21) > 0
+    puts "Player 1's points: #{@player1.points}"
+    puts "Dealer's points: #{@dealer.points}"
+    if (@player1.points - 21) > 0 && (@dealer.points - 21) <= 0
+      puts "Dealer won with #{@dealer.points} points."
+    elsif (@player1.points - 21) <= 0 && (@dealer.points - 21) > 0
       puts "Player wins with #{@player1.points} points."
-    elsif (@player1.points - 21) <= 0 && (@table.points - 21) <= 0
-      if @player1.points > @table.points
+    elsif (@player1.points - 21) <= 0 && (@dealer.points - 21) <= 0
+      if @player1.points > @dealer.points
         puts "Player wins with #{@player1.points} points."
-      elsif @player1.points < @table.points
-        puts "Table won with #{@table.points} points."
+      elsif @player1.points < @dealer.points
+        puts "Dealer won with #{@dealer.points} points."
       else
         puts "Goddamn it's a draw!"
       end
@@ -56,10 +66,10 @@ class RealBlackJack
     end
   end
 
-  def table_points_are_less_than_17
-    if @table.points < 17
-      puts "\nTable draws a card."
-      @table.add_card(@deck.draw_first_card)
+  def dealer_points_are_less_than_17
+    if @dealer.points < 17
+      puts "\nDealer draws a card(#{@dealer.points} points.)"
+      @dealer.add_card(@deck.draw_first_card)
     end
   end
 end
