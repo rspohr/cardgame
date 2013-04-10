@@ -28,10 +28,11 @@ class RealBlackJack
   end
 
   def dealer_plays
-    while @dealer.points < 17
-      dealer_points_are_less_than_17
+    while @dealer.points < 17 && @player1.points <= 21
+        puts "\nDealer draws a card(#{@dealer.points} points.)"
+        @dealer.add_card(@deck.draw_first_card)
     end
-    while (@player1.points - 21) > (@dealer.points - 21) && @dealer.points < 21
+    while (@player1.points - 21) > (@dealer.points - 21) && @dealer.points < 21 && @player1.points <= 21
       puts "\nDealer takes the risk and draws a card (#{@dealer.points} points.)"
       @dealer.add_card(@deck.draw_first_card)
     end
@@ -66,12 +67,6 @@ class RealBlackJack
     end
   end
 
-  def dealer_points_are_less_than_17
-    if @dealer.points < 17
-      puts "\nDealer draws a card(#{@dealer.points} points.)"
-      @dealer.add_card(@deck.draw_first_card)
-    end
-  end
 end
 
 realblackjack = RealBlackJack.new
