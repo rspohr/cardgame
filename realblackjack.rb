@@ -10,6 +10,17 @@ class RealBlackJack
     @deck.shuffle
   end
 
+  def set_up
+    puts "\n------------------\nSetting up a new game of Blackjack.\n-----------------"
+    @player1.add_card(@deck.draw_first_card)
+    @player1.add_card(@deck.draw_first_card)
+    @dealer.add_card(@deck.draw_first_card)
+    @dealer.add_card(@deck.draw_first_card)
+    puts "Player 1's cards:" 
+    puts "\n#{@player1.show_cards}"
+    puts "Dealer's face-up card: #{@dealer.cards.first}"
+  end
+
   def turn
     puts "\nPlayer 1 do you want to draw a card?\n yes / no / score ."
     choice = gets.chomp
@@ -17,6 +28,7 @@ class RealBlackJack
       @player1.add_card(@deck.draw_first_card)
       puts "\nPlayer 1 draws a card."
       puts "Player 1's points: #{@player1.points}."
+      puts "#{@player1.cards}"
       turn
     elsif choice == "score"
       score
@@ -70,6 +82,7 @@ class RealBlackJack
 end
 
 realblackjack = RealBlackJack.new
+realblackjack.set_up
 realblackjack.turn
 
 #create iterative turns for the game
