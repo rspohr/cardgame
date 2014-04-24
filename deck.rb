@@ -2,6 +2,7 @@ require './card'
 
 class Deck
 
+  attr_reader :cards
   def initialize
     @cards = []
     Card::POSSIBLE_SUITS.each do |suit|

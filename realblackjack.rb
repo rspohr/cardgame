@@ -21,15 +21,28 @@ class RealBlackJack
     puts "Dealer's face-up card: #{@dealer.cards.first}"
   end
 
+  def busted?
+    if @player1.points > 21
+      puts "\nPlayer busts. Dealer wins."
+    else
+      turn 
+    end 
+  end
+  
+  def choice_yes
+      card = @deck.draw_first_card
+      @player1.add_card(card)
+      puts "\nPlayer 1 draws a card: #{card}"
+      puts "Player 1's points: #{@player1.points}."
+      @player1.show_cards
+      busted?
+  end
+
   def turn
     puts "\nPlayer 1 do you want to draw a card?\n yes / no / score ."
     choice = gets.chomp
     if choice == "yes"
-      @player1.add_card(@deck.draw_first_card)
-      puts "\nPlayer 1 draws a card."
-      puts "Player 1's points: #{@player1.points}."
-      puts "#{@player1.cards}"
-      turn
+      choice_yes
     elsif choice == "score"
       score
       turn
@@ -40,13 +53,9 @@ class RealBlackJack
   end
 
   def dealer_plays
-    while @dealer.points < 17 && @player1.points <= 21
+    while @dealer.points < 17
         puts "\nDealer draws a card(#{@dealer.points} points.)"
         @dealer.add_card(@deck.draw_first_card)
-    end
-    while (@player1.points - 21) > (@dealer.points - 21) && @dealer.points < 21 && @player1.points <= 21
-      puts "\nDealer takes the risk and draws a card (#{@dealer.points} points.)"
-      @dealer.add_card(@deck.draw_first_card)
     end
   end
 

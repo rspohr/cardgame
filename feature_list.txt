@@ -1,0 +1,5 @@
+- set number of decks
+- reshuffle
+- set number of players
+- credits
+
