@@ -28,7 +28,8 @@ class Hand
   end
 
   def show_cards
-    puts "#{@cards.join(", ")}"
+    "#{@cards.join(", ")}"
   end
 end
+
 
