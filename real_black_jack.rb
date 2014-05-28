@@ -10,5 +10,7 @@ end
 game = Game.new
 game.set_up
 print_setup_cards(game)
-game.turn
-
+if game.automatic_defeat
+elsif game.surrender?
+else game.turn
+end

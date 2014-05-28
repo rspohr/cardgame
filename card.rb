@@ -1,5 +1,7 @@
 class Card
 
+  attr_reader :value
+
   POSSIBLE_SUITS = [:Diamonds, :Spades, :Hearts, :Clubs].freeze
   POSSIBLE_VALUES = [:Ace, 2,  3,  4,  5,  6,  7,  8,  9, 10, :Jack, :Queen, :King].freeze
 

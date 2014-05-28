@@ -32,12 +32,38 @@ class Game
   def choice_yes
       card = @deck.draw_first_card
       @player1.add_card(card)
+      puts "\n-----------------"
       puts "\nPlayer 1 draws a card: #{card}"
-      puts "Player 1's points: #{@player1.points}."
+      puts "\nPlayer 1's points: #{@player1.points}."
+      puts "Dealer's face-up card: #{@dealer.cards.first}"
       @player1.show_cards
       busted?
   end
 
+  def automatic_defeat
+    if @dealer.cards.first.check_card_points == 10 && @dealer.cards.last.value == :Ace
+      puts "\nDealer has a blackjack. Playes loses."
+      return true
+    else
+      return false
+    end
+  end  
+
+
+  def surrender?
+    if @dealer.cards.first.value == :Ace
+      puts "\nDealer face-up card is an Ace. Player 1 do you want to surrender?"
+      choice = gets.chomp
+      if choice == "yes"
+        puts "Player 1 surrenders."
+        return true
+      else
+        return false
+      end
+    else
+    end 
+  end
+  
   def turn
     puts "\nPlayer 1 do you want to draw a card?\n yes / no / score ."
     choice = gets.chomp
@@ -53,10 +79,11 @@ class Game
   end
 
   def dealer_plays
-    puts "dealer's cards: #{@dealer.show_cards}"
+    puts "\n------------------"
+    puts "Dealer's cards: #{@dealer.show_cards}"
     while @dealer.points < 17
-        puts "\nDealer draws a card(#{@dealer.points} points.)"
         @dealer.add_card(@deck.draw_first_card)
+        puts "\nDealer draws a card: #{@dealer.cards.last} (#{@dealer.points} points.)"
     end
   end
 
@@ -70,6 +97,7 @@ class Game
   end
 
   def define_winner
+    puts "\n--------------"
     puts "Player 1's points: #{@player1.points}"
     puts "Dealer's points: #{@dealer.points}"
     if (@player1.points - 21) > 0 && (@dealer.points - 21) <= 0
