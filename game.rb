@@ -1,20 +1,23 @@
 require './deck'
 require './hand'
+require './player'
 
 class Game
 
-  attr_reader :player1, :dealer
+  attr_reader :player1, :dealer, :deck
 
   def initialize
-    @player1 = Hand.new
+    @player1 = Player.new
     @dealer = Hand.new
     @deck = Deck.new
     @deck.shuffle
   end
 
   def set_up
-    @player1.add_card(@deck.draw_first_card)
-    @player1.add_card(@deck.draw_first_card)
+    @player1.hand.cards.clear
+    @player1.hand.add_card(@deck.draw_first_card)
+    @player1.hand.add_card(@deck.draw_first_card)
+    @dealer.cards.clear
     @dealer.add_card(@deck.draw_first_card)
     @dealer.add_card(@deck.draw_first_card)
   end
@@ -22,7 +25,7 @@ class Game
 
 
   def busted?
-    if @player1.points > 21
+    if @player1.hand.points > 21
       puts "\nPlayer busts. Dealer wins."
     else
       turn 
@@ -31,12 +34,12 @@ class Game
   
   def choice_yes
       card = @deck.draw_first_card
-      @player1.add_card(card)
+      @player1.hand.add_card(card)
       puts "\n-----------------"
       puts "\nPlayer 1 draws a card: #{card}"
-      puts "\nPlayer 1's points: #{@player1.points}."
+      puts "\nPlayer 1's points: #{@player1.hand.points}."
       puts "Dealer's face-up card: #{@dealer.cards.first}"
-      @player1.show_cards
+      @player1.hand.show_cards
       busted?
   end
 
@@ -90,7 +93,7 @@ class Game
   def score
     puts "\nPlayer 1 has #{@player1.points} points."
     puts "Player 1's cards:"
-    puts "#{@player1.show_cards}"
+    puts "#{@player1.hand.show_cards}"
     puts "Dealer has #{@dealer.points} points."
     puts "Dealer's cards:" 
     puts "#{@dealer.show_cards}"
@@ -98,16 +101,16 @@ class Game
 
   def define_winner
     puts "\n--------------"
-    puts "Player 1's points: #{@player1.points}"
+    puts "Player 1's points: #{@player1.hand.points}"
     puts "Dealer's points: #{@dealer.points}"
-    if (@player1.points - 21) > 0 && (@dealer.points - 21) <= 0
+    if (@player1.hand.points - 21) > 0 && (@dealer.points - 21) <= 0
       puts "Dealer won with #{@dealer.points} points."
-    elsif (@player1.points - 21) <= 0 && (@dealer.points - 21) > 0
-      puts "Player wins with #{@player1.points} points."
-    elsif (@player1.points - 21) <= 0 && (@dealer.points - 21) <= 0
-      if @player1.points > @dealer.points
-        puts "Player wins with #{@player1.points} points."
-      elsif @player1.points < @dealer.points
+    elsif (@player1.hand.points - 21) <= 0 && (@dealer.points - 21) > 0
+      puts "Player wins with #{@player1.hand.points} points."
+    elsif (@player1.hand.points - 21) <= 0 && (@dealer.points - 21) <= 0
+      if @player1.hand.points > @dealer.points
+        puts "Player wins with #{@player1.hand.points} points."
+      elsif @player1.hand.points < @dealer.points
         puts "Dealer won with #{@dealer.points} points."
       else
         puts "Goddamn it's a draw!"
@@ -117,5 +120,9 @@ class Game
     end
   end
 
+  def reset_hands
+    
+  end
+  
 end
 #create iterative turns for the game
