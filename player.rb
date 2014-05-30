@@ -7,12 +7,12 @@ class Player
 
   def initialize
     @hand = Hand.new
-    @money = 0
+    @money = Money.new(0)
   end
 
-  def buy_in
-    @money = gets.chomp.to_i
-  end
+ # def buy_in
+ #   @money.amount = gets.chomp.to_i
+ # end
 
 end
 

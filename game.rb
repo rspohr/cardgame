@@ -27,6 +27,7 @@ class Game
   def busted?
     if @player1.hand.points > 21
       puts "\nPlayer busts. Dealer wins."
+      @player1.money.lose_money
     else
       turn 
     end 
@@ -37,6 +38,7 @@ class Game
       @player1.hand.add_card(card)
       puts "\n-----------------"
       puts "\nPlayer 1 draws a card: #{card}"
+      puts "\nPlayer 1's cards: #{@player1.hand.show_cards}"
       puts "\nPlayer 1's points: #{@player1.hand.points}."
       puts "Dealer's face-up card: #{@dealer.cards.first}"
       @player1.hand.show_cards
@@ -59,6 +61,7 @@ class Game
       choice = gets.chomp
       if choice == "yes"
         puts "Player 1 surrenders."
+        @player1.money.lose_money_by_half
         return true
       else
         return false
@@ -104,14 +107,18 @@ class Game
     puts "Player 1's points: #{@player1.hand.points}"
     puts "Dealer's points: #{@dealer.points}"
     if (@player1.hand.points - 21) > 0 && (@dealer.points - 21) <= 0
-      puts "Dealer won with #{@dealer.points} points."
+      puts "Dealer wins with #{@dealer.points} points."
+      @player1.money.lose_money
     elsif (@player1.hand.points - 21) <= 0 && (@dealer.points - 21) > 0
       puts "Player wins with #{@player1.hand.points} points."
+      @player1.money.win_money
     elsif (@player1.hand.points - 21) <= 0 && (@dealer.points - 21) <= 0
       if @player1.hand.points > @dealer.points
         puts "Player wins with #{@player1.hand.points} points."
+      @player1.money.win_money
       elsif @player1.hand.points < @dealer.points
-        puts "Dealer won with #{@dealer.points} points."
+        puts "Dealer wins with #{@dealer.points} points."
+        @player1.money.lose_money
       else
         puts "Goddamn it's a draw!"
       end
@@ -121,7 +128,7 @@ class Game
   end
 
   def reset_hands
-    
+      
   end
   
 end

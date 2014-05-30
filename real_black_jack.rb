@@ -21,12 +21,13 @@ end
 
 game = Game.new
 puts "Player 1 how much do you want to buy in for?"
-game.player1.buy_in
+game.player1.money.buy_in
 #game.set_up
 #new_game(game)
 while game.deck.cards.count > 10
   new_game(game)
 end
+puts "Deck does not have enough cards left to play."
 
 # clear hands
 # start new turn
