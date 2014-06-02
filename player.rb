@@ -10,11 +10,4 @@ class Player
     @money = Money.new(0)
   end
 
- # def buy_in
- #   @money.amount = gets.chomp.to_i
- # end
-
 end
-
-
-

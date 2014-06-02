@@ -22,8 +22,6 @@ class Game
     @dealer.add_card(@deck.draw_first_card)
   end
 
-
-
   def busted?
     if @player1.hand.points > 21
       puts "\nPlayer busts. Dealer wins."
@@ -46,14 +44,14 @@ class Game
   end
 
   def automatic_defeat
-    if @dealer.cards.first.check_card_points == 10 && @dealer.cards.last.value == :Ace
-      puts "\nDealer has a blackjack. Playes loses."
+      if dealer_blackjack(@dealer.cards.first,@dealer.cards.last)
+        puts "\nDealer has a blackjack. Playes loses."
+      @player1.money.lose_money
       return true
     else
       return false
     end
   end  
-
 
   def surrender?
     if @dealer.cards.first.value == :Ace
@@ -63,13 +61,24 @@ class Game
         puts "Player 1 surrenders."
         @player1.money.lose_money_by_half
         return true
+      elsif dealer_blackjack(@dealer.cards.first, @dealer.cards.last)
+        @player1.money.lose_money
+        puts "\n Dealer has a blackjack. Dealer wins."
+        return true
       else
         return false
       end
     else
     end 
   end
-  
+
+  def dealer_blackjack(card1,card2)
+    if card1.check_card_points == 10 && card2.value == :Ace
+      return true
+    else
+      return false
+  end
+ end 
   def turn
     puts "\nPlayer 1 do you want to draw a card?\n yes / no / score ."
     choice = gets.chomp
@@ -94,12 +103,12 @@ class Game
   end
 
   def score
-    puts "\nPlayer 1 has #{@player1.points} points."
+    puts "\nPlayer 1 has #{@player1.hand.points} points."
     puts "Player 1's cards:"
     puts "#{@player1.hand.show_cards}"
-    puts "Dealer has #{@dealer.points} points."
-    puts "Dealer's cards:" 
-    puts "#{@dealer.show_cards}"
+    puts "Dealer has at least #{@dealer.cards.first.check_card_points} points."
+    puts "Dealer's face-up card:" 
+    puts "#{@dealer.cards.first}"
   end
 
   def define_winner
@@ -127,9 +136,4 @@ class Game
     end
   end
 
-  def reset_hands
-      
-  end
-  
 end
-#create iterative turns for the game
