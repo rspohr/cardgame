@@ -43,8 +43,8 @@ class Game
       busted?
   end
 
-  def automatic_defeat
-      if dealer_blackjack(@dealer.cards.first,@dealer.cards.last)
+  def automatic_win
+      if first_hand_blackjack(@dealer.cards.first,@dealer.cards.last)
         puts "\nDealer has a blackjack. Playes loses."
       @player1.money.lose_money
       return true
@@ -61,7 +61,7 @@ class Game
         puts "Player 1 surrenders."
         @player1.money.lose_money_by_half
         return true
-      elsif dealer_blackjack(@dealer.cards.first, @dealer.cards.last)
+      elsif first_hand_blackjack(@dealer.cards.first, @dealer.cards.last)
         @player1.money.lose_money
         puts "\n Dealer has a blackjack. Dealer wins."
         return true
@@ -72,7 +72,13 @@ class Game
     end 
   end
 
-  def dealer_blackjack(card1,card2)
+#  def hidden_unmatched_blackjack?(dealer,player1)
+#    if dealer.cards.first.check_card_points == 10 && dealer.cards.last.value == :Ace && player1.cards.
+#    else 
+#    end
+#  end
+
+  def first_hand_blackjack(card1,card2)
     if card1.check_card_points == 10 && card2.value == :Ace
       return true
     else

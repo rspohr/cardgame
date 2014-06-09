@@ -16,7 +16,7 @@ def new_game(game)
   end
   game.set_up
   print_setup_cards(game)
-  if game.automatic_defeat
+  if game.automatic_win
   elsif game.surrender?
   else #while game.player1.money > 0 
     game.turn
