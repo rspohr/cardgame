@@ -44,14 +44,24 @@ class Game
   end
 
   def automatic_win
-      if first_hand_blackjack(@dealer.cards.first,@dealer.cards.last)
-        puts "\nDealer has a blackjack. Playes loses."
+    player_blackjack = @player1.hand.blackjack?
+    dealer_blackjack = @dealer.blackjack?
+
+    if player_blackjack && dealer_blackjack
+      puts "\nBoth player 1 and dealer have blackjack. It's a push."
+      true
+    elsif player_blackjack
+      puts "\nPlayer 1 has a blackjack!"
+      @player1.money.win_blackjack
+      true
+    elsif dealer_blackjack
+      puts "\nDealer has a blackjack. Player loses."
       @player1.money.lose_money
-      return true
+      true
     else
-      return false
+      false
     end
-  end  
+  end
 
   def surrender?
     if @dealer.cards.first.value == :Ace
@@ -61,7 +71,7 @@ class Game
         puts "Player 1 surrenders."
         @player1.money.lose_money_by_half
         return true
-      elsif first_hand_blackjack(@dealer.cards.first, @dealer.cards.last)
+      elsif @dealer.blackjack?
         @player1.money.lose_money
         puts "\n Dealer has a blackjack. Dealer wins."
         return true
@@ -69,22 +79,9 @@ class Game
         return false
       end
     else
-    end 
+    end
   end
 
-#  def hidden_unmatched_blackjack?(dealer,player1)
-#    if dealer.cards.first.check_card_points == 10 && dealer.cards.last.value == :Ace && player1.cards.
-#    else 
-#    end
-#  end
-
-  def first_hand_blackjack(card1,card2)
-    if card1.check_card_points == 10 && card2.value == :Ace
-      return true
-    else
-      return false
-  end
- end 
   def turn
     puts "\nPlayer 1 do you want to draw a card?\n yes / no / score ."
     choice = gets.chomp
