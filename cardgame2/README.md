@@ -25,6 +25,32 @@ python blackjack.py
 python test_game.py
 ```
 
+### Interface Web (Flask)
+
+1) Instale dependências (Flask):
+```bash
+pip install Flask
+```
+
+2) Rode o servidor web:
+```bash
+python -m cardgame2.web.app
+```
+
+3) Abra no navegador:
+```text
+http://127.0.0.1:5000/
+```
+
+Controles na Web:
+- "Set Buy-in": define a banca inicial (padrão 50)
+- "New Round": inicia uma nova rodada (aplica as regras de blackjack, incluindo oferta de rendição quando o dealer mostra Ás)
+- "Hit": comprar carta
+- "Stand": parar
+- "Surrender": se disponível, rende-se e perde metade da aposta
+
+Animações básicas de compra de cartas são aplicadas via CSS.
+
 ## Regras do Jogo
 
 - Compra inicial definida pelo usuário

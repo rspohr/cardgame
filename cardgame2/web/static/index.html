@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blackjack</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="table">
+      <header>
+        <h1>Blackjack</h1>
+        <div class="bankroll">Bankroll: $<span id="bankroll">0</span></div>
+      </header>
+
+      <section class="dealer">
+        <h2>Dealer</h2>
+        <div id="dealer-cards" class="cards"></div>
+        <div class="points">Points: <span id="dealer-points">0</span></div>
+      </section>
+
+      <section class="player">
+        <h2>Player</h2>
+        <div id="player-cards" class="cards"></div>
+        <div class="points">Points: <span id="player-points">0</span></div>
+      </section>
+
+      <section class="controls">
+        <div class="buyin">
+          <input id="buyin-amount" type="number" min="5" step="5" value="50" />
+          <button id="btn-buyin">Set Buy-in</button>
+          <button id="btn-new">New Round</button>
+        </div>
+        <div class="actions">
+          <button id="btn-hit" disabled>Hit</button>
+          <button id="btn-stand" disabled>Stand</button>
+          <button id="btn-surrender" disabled>Surrender</button>
+        </div>
+      </section>
+
+      <div id="message" class="message"></div>
+    </div>
+
+    <script src="/static/app.js"></script>
+  </body>
+  </html>
+
