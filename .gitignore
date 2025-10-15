@@ -1,0 +1,3 @@
+# Python artifacts
+cardgame2/__pycache__/
+*.pyc
