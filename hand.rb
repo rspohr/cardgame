@@ -31,6 +31,10 @@ class Hand
     "#{@cards.join(", ")}"
   end
 
+  def blackjack?
+    @cards.length == 2 && points == 21
+  end
+
 end
 
 

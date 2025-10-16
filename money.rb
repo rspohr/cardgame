@@ -21,6 +21,10 @@ class Money
     @amount = @amount + bet
   end
 
+  def win_blackjack
+    @amount = @amount + bet * 3 / 2.0
+  end
+
   def to_s
     "#{@amount}"
   end
